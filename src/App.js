@@ -9,7 +9,7 @@ class App extends Component {
     super(props);
     this.state = {
       selectedItem: {},
-      recipeItems: []
+      recipeIngredients: []
     }
     this.addToRecipe = this.addToRecipe.bind(this);
   }
@@ -22,62 +22,61 @@ class App extends Component {
     console.log('adding', item);
     this.setState({
       selectedItem: item,
-      recipeItems: [...this.state.recipeItems].concat(item)
+      recipeIngredients: [...this.state.recipeIngredients].concat(item)
     })
   }
   
-  render() {
+  getTotal(field) {
+    return this.state.recipeIngredients.reduce((acc, curr, idx, src) => {
+                return (
+                  acc + (curr[field] && !isNaN(curr[field].amount) ? curr[field].amount : 0)
+                )
+              }, 0);
+  }
   
+  render() {
+    
     console.log('fooditems', foodItems);
-    const foodItemsByThree = _.chunk(foodItems, 3);
-    console.log('by3', foodItemsByThree);
     
     return (
       <div className="App">
+        <h1>What's in that?</h1>
+        <p>Create a recipe by adding ingredients. See how much sugar, protein and salt are in your recipe.</p>
         <div className="container">
-          {foodItemsByThree.map((frow, i) => {
+          <div className="row">
+          {foodItems.map((f, i) => {
             return (
-                <div
-                  className="row"
-                  key={i}
-                >
-                  {frow.map((f, j) => {
-                    return (
-                        <div
-                          className="col-xs-4"
-                          key={j}
-                        >
-                          <h3>
-                            {f.name}
-                          </h3>
-                          <button
-                            className="btn btn-primary"
-                            onClick={this.addToRecipe}
-                            name={f._id}
-                          >Add to recipe</button>
-                        </div>
-                      )
-                  })}
+              <div
+                className="col-sm-4 col-xs-6 food-card"
+                key={i}
+              >
+                <div className="name">
+                  {f.name}
                 </div>
-              )
+                <button
+                  className="btn btn-primary"
+                  onClick={this.addToRecipe}
+                  name={f._id}
+                >Add to recipe
+                </button>
+              </div>
+            )
           })}
-          
-          <table className="table table-condensed">
+          </div>
+        
+          <table className="table table-bordered" style={{marginTop: '30px'}}>
             <thead>
-              <tr>
-                <td>Quantity</td>
-                <td>Units</td>
-                <td>Item</td>
-                <td>Protein</td>
-                <td>(units)</td>
-                <td>Sugar</td>
-                <td>(units)</td>
-                <td>Sodium</td>
-                <td>(units)</td>
-              </tr>
+            <tr>
+              <td>Quantity</td>
+              <td>Units</td>
+              <td>Item</td>
+              <td>Protein</td>
+              <td>Sugar</td>
+              <td>Sodium</td>
+            </tr>
             </thead>
             <tbody>
-            {this.state.recipeItems.map((item, i) => {
+            {this.state.recipeIngredients.map((item, i) => {
               return (
                 <tr
                   key={i}
@@ -85,39 +84,31 @@ class App extends Component {
                   <td> 1</td>
                   <td>Serving</td>
                   <td style={{textAlign: 'left'}}>{item.name}</td>
-                  <td>{item.protein && item.protein.amount}</td>
-                  <td>{item.protein && item.protein.units}</td>
-                  <td>{item.sugar && item.sugar.amount}</td>
-                  <td>{item.sugar && item.sugar.units}</td>
-                  <td>{item.sodium && item.sodium.amount}</td>
-                  <td>{item.sodium && item.sodium.units}</td>
+                  <td>{item.protein && `${item.protein.amount} g`}</td>
+                  <td>{item.sugar && `${item.sugar.amount} g`}</td>
+                  <td>{item.sodium && `${item.sodium.amount} mg`}</td>
                 </tr>
               )
             })}
-            <tr>
-              <td colSpan={3}></td>
+            <tr style={{background: '#e1e1e1'}}>
+              <td colSpan={2}></td>
+              <td>Total</td>
               {/* https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce */}
-              <td>{this.state.recipeItems.reduce((acc, curr, idx, src) => {
+              <td>{this.state.recipeIngredients.reduce((acc, curr, idx, src) => {
                 return (
                   acc + (curr.protein && !isNaN(curr.protein.amount) ? curr.protein.amount : 0)
                 )
               }, 0)}
               </td>
-              <td>g</td>
-              <td>{this.state.recipeItems.reduce((acc, curr, idx, src) => {
-                return (
-                  acc + (curr.sugar && !isNaN(curr.sugar.amount) ? curr.sugar.amount : 0)
-                )
-              }, 0)}
+              <td>
+                {`${this.state.recipeIngredients.reduce((acc, curr, idx, src) => {
+                  return (
+                    acc + (curr.sugar && !isNaN(curr.sugar.amount) ? curr.sugar.amount : 0)
+                  )
+                }, 0)} g`}
               </td>
-              <td>g</td>
-              <td>{this.state.recipeItems.reduce((acc, curr, idx, src) => {
-                return (
-                  acc + (curr.sodium && !isNaN(curr.sodium.amount) ? curr.sodium.amount : 0)
-                )
-              }, 0)}
+              <td>{`${this.getTotal('sodium')} mg`}
               </td>
-              <td>mg</td>
             </tr>
             </tbody>
           </table>

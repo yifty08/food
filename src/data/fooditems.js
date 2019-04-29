@@ -82,19 +82,16 @@ export default [
   },
   {
     "_id": '6',
-    "name": "Klondike Dark Chocolate Bars",
-    "sodium": {"amount": 50, "units": "mg"},
-    "sugar": {"amount": 21, "units": "g"},
+    "name": "Giant Unsweetened Applesauce",
+    "sodium": {"amount": 10, "units": "mg"},
+    "sugar": {"amount": 11, "units": "g"},
+    "total carbohydrates": {"amount": 12, "units": "g"},
     "fiber": {"amount": 1, "units": "g"},
-    "total carbohydrate": {"amount": 28, "units": "g"},
-    "total fat": {"amount": 14, "units": "g"},
-    "saturated fat": {"amount": 11, "units": "g"},
-    "cholesterol": {"amount": 10, "units": "mg"},
-    "protein": {"amount": 2, "units": "g"},
-    "iron": {"amount": 2, "units": "pct"},
-    "calcium": {"amount": 6, "units": "pct"},
-    "vitamin a": {"amount": 4, "units": "pct"},
-    "serving": {"amount": 1, "units": "bar"}
+    "potassium": {"amount": 2, "units": "pct"},
+    "vitamin c": {"amount": 100, "units": "pct"},
+    "serving": {"amount": 0.5, "units": "cup"},
+    "conversion": {"amount": 122, "units": "g"},
+    "calories": 50
   },
   {
     "_id": '7',
@@ -118,6 +115,7 @@ export default [
     "total carbohydrates": {"amount": 16, "units": "g"},
     "saturated fat": {"amount": 4.5, "units": "g"},
     "total fat": {"amount": 7, "units": "g"},
+    "protein": {"amount": 2, "units": "g"},
     "vitamin a": {"amount": 6, "units": "pct"},
     "calcium": {"amount": 8, "units": "pct"},
     "serving": {"amount": 0.5, "units": "c"}
@@ -130,7 +128,7 @@ export default [
     "saturated fat": {"amount": 7, "units": "g"},
     "cholesterol": {"amount": 30, "units": "mg"},
     "serving": {"amount": 1, "units": "T"},
-    "conversion": {"g": 14},
+    "conversion": {"amount": 14, "units": 14},
     "calories": 100
   },
   {
@@ -142,7 +140,7 @@ export default [
     "monounsaturated fat": {"amount": 11, "units": "g"},
     "cholesterol": {"amount": 30, "units": "mg"},
     "serving": {"amount": 1, "units": "T"},
-    "conversion": {"g": 14},
+    "conversion": {"amount": 14, "units": 14},
     "calories": 120
   },
   {
@@ -178,7 +176,7 @@ export default [
     "selenium": {"amount": 0.5, "units": "ug"},
     "zinc": {"amount": 0.9, "units": "mg"},
     "serving": {"amount": 1, "units": "avocado"},
-    "conversion": {"g": 136},
+    "conversion": {"amount": 136, "units": "g"},
     "calories": 227
   }
 ]
